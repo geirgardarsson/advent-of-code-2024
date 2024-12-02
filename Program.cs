@@ -1,13 +1,12 @@
 ﻿using AdventOfCode2024.Day1;
-using AdventOfCode2024.Enums;
 using AdventOfCode2024.Utils;
 
-var (day, part, _) = args.ParseInputs();
+var (day, part) = args.ParseInputs();
 
 var output = (day, part) switch
 {
-    (Day.Day1, Part.Part1) => Day1.Part1(args),
-    (Day.Day1, Part.Part2) => Day1.Part2(args),
+    (1, 1) => Day1.Part1(args),
+    (1, 2) => Day1.Part2(args),
     _ => throw new ArgumentOutOfRangeException()
 };
 

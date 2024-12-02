@@ -1,38 +1,36 @@
-using AdventOfCode2024.Enums;
-
 namespace AdventOfCode2024.Utils;
 
 public static class FileUtils
 {
     public static string[] ReadInput(string[] args)
     {
-        var (day, part, isTest) = args.ParseInputs();
+        var (day, _) = args.ParseInputs();
 
-        var daypart = $"{day.GetDescription()}/{part.GetDescription()}";
+        var folder = $"Day{day}";
+        var filename = "input.txt";
 
-        if (isTest)
+        if (args.HasTestFlag())
         {
-            daypart = $"{daypart}-test";
+            filename = $"test-{filename}";
         }
 
-        var filename = $"{daypart}-input.txt";
+        var path = $"{folder}/{filename}";
 
-        return File.ReadAllLines(filename);
+        return File.ReadAllLines(path);
     }
 
     public static void WriteOutput(string[] args, object data)
     {
-        var (day, part, isTest) = args.ParseInputs();
+        var (day, part) = args.ParseInputs();
 
-        var daypart = $"{day.GetDescription()}/{part.GetDescription()}";
+        var folder = $"Day{day}";
 
-        if (isTest)
-        {
-            daypart = $"{daypart}-test";
-        }
+        var filename = args.HasTestFlag()
+            ? $"part{part}-test-output.txt"
+            : $"part{part}-output.txt";
 
-        var filename = $"{daypart}-output.txt";
+        var path = $"{folder}/{filename}";
 
-        File.WriteAllText(filename, data.ToString());
+        File.WriteAllText(path, data.ToString());
     }
 }
