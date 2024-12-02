@@ -6,7 +6,7 @@ public static class Day1
 {
     public static int Part1(string[] args)
     {
-        var numbers = ParseInput(args);
+        var numbers = InputUtils.ParseTupleList(args);
 
         var first = numbers.Select(t => t.Item1).OrderBy(i => i);
         var second = numbers.Select(t => t.Item2).OrderBy(i => i);
@@ -22,7 +22,7 @@ public static class Day1
 
     public static int Part2(string[] args)
     {
-        var numbers = ParseInput(args);
+        var numbers = InputUtils.ParseTupleList(args);
 
         var first = numbers.Select(t => t.Item1);
 
@@ -39,20 +39,5 @@ public static class Day1
         FileUtils.WriteOutput(args, output);
 
         return output;
-    }
-
-    private static IEnumerable<(int, int)> ParseInput(string[] args)
-    {
-        var lines = FileUtils.ReadInput(args);
-
-        var numbers = lines
-            .Select(l => l
-                .Split(" ")
-                .Where(s => int.TryParse(s, out _))
-                .Select(n => int.Parse(n))
-                .ToList())
-            .Select(l => (l[0], l[1]));
-
-        return numbers;
     }
 }

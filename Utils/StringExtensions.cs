@@ -5,7 +5,9 @@ public static class StringExtensions
     public static (int day, int part) ParseInputs(this string[] args)
     {
         var day = int.Parse(args[0]);
-        var part = args.Length > 1 ? int.Parse(args[1]) : 1;
+        var part = args.Length > 1
+            ? int.TryParse(args[1], out int argpart) ? argpart : 1
+            : 1;
 
         return (day, part);
     }
