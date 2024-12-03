@@ -1,6 +1,8 @@
-﻿using AdventOfCode2024.Day1;
-using AdventOfCode2024.Day2;
+﻿using System.Diagnostics;
+using AdventOfCode2024.Days;
 using AdventOfCode2024.Utils;
+
+var sw = Stopwatch.StartNew();
 
 var (day, part) = args.ParseInputs();
 
@@ -10,7 +12,12 @@ object output = (day, part) switch
     (1, 2) => Day1.Part2(args),
     (2, 1) => Day2.Part1(args),
     (2, 2) => Day2.Part2(args),
+    (3, 1) => Day3.Part1(args),
+    (3, 2) => Day3.Part2(args),
     _ => throw new ArgumentOutOfRangeException()
 };
 
 Console.WriteLine(output);
+Console.WriteLine("Finished in {0}ms", sw.ElapsedMilliseconds);
+
+FileUtils.WriteOutput(args, output);

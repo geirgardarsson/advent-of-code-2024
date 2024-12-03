@@ -1,4 +1,4 @@
-namespace AdventOfCode2024.Day1;
+namespace AdventOfCode2024.Days;
 
 using AdventOfCode2024.Utils;
 
@@ -14,8 +14,6 @@ public static class Day1
         var output = first
             .Zip(second, (f, s) => Math.Abs(f - s))
             .Sum();
-
-        FileUtils.WriteOutput(args, output);
 
         return output;
     }
@@ -35,8 +33,6 @@ public static class Day1
             .Select(n => n * (
                 counter.TryGetValue(n, out int count) ? count : 0))
             .Sum();
-
-        FileUtils.WriteOutput(args, output);
 
         return output;
     }

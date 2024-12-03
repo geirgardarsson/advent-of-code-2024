@@ -32,4 +32,7 @@ public static class InputUtils
 
         return numbers;
     }
+
+    public static string ParseString(string[] args) =>
+        FileUtils.ReadInput(args).First();
 }

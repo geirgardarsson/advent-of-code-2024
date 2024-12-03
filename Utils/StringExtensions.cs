@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace AdventOfCode2024.Utils;
 
 public static class StringExtensions
@@ -11,6 +13,12 @@ public static class StringExtensions
 
         return (day, part);
     }
+
+    public static IEnumerable<string> Filter(this string str, string pattern) =>
+        Regex.Matches(str, pattern).Select(m => m.Value);
+
+    public static string Remove(this string str, string pattern) =>
+        Regex.Replace(str, pattern, "");
 
     public static bool HasTestFlag(this string[] args) =>
         args.ContainsAny("-t", "--test");
