@@ -1,7 +1,5 @@
 namespace AdventOfCode2024.Days;
 
-using AdventOfCode2024.Utils;
-
 public static class Day1
 {
     public static int Part1(string[] args)

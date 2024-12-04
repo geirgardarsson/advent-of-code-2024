@@ -1,3 +1,4 @@
+
 namespace AdventOfCode2024.Utils;
 
 public static class InputUtils
@@ -35,4 +36,7 @@ public static class InputUtils
 
     public static string ParseString(string[] args) =>
         FileUtils.ReadInput(args).First();
+
+    public static char[][] ParseCharMatrix(string[] args) =>
+        [.. FileUtils.ReadInput(args).Select(l => l.ToCharArray())];
 }

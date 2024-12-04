@@ -22,4 +22,7 @@ public static class StringExtensions
 
     public static bool HasTestFlag(this string[] args) =>
         args.ContainsAny("-t", "--test");
+
+    public static bool IsAny(this string str, params string[] strings) =>
+        strings.Contains(str);
 }
