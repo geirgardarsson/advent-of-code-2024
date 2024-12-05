@@ -1,23 +1,20 @@
 
+
 namespace AdventOfCode2024.Utils;
 
 public static class InputUtils
 {
-    public static List<List<int>> ParseNumberLists(
-        string[] args)
-    {
-        var lines = FileUtils.ReadInput(args);
+    public static List<List<int>> ParseNumberLists(string[] args)
+        => ParseNumberLists(FileUtils.ReadInput(args));
 
-        var numbers = lines
+    public static List<List<int>> ParseNumberLists(
+        List<string> lines,
+        string delimiter = " ") => [.. lines
             .Select(l => l
-                .Split(" ")
+                .Split(delimiter)
                 .Where(s => int.TryParse(s, out _))
                 .Select(n => int.Parse(n))
-                .ToList())
-            .ToList();
-
-        return numbers;
-    }
+                .ToList())];
 
     public static IEnumerable<(int, int)> ParseTupleList(string[] args)
     {
@@ -39,4 +36,17 @@ public static class InputUtils
 
     public static char[][] ParseCharMatrix(string[] args) =>
         [.. FileUtils.ReadInput(args).Select(l => l.ToCharArray())];
+
+    public static (List<string> list1, List<string> list2) ParseSplitInput(
+        string[] args)
+    {
+        var lines = FileUtils.ReadInput(args).ToList();
+
+        var splitIndex = lines.IndexOf("");
+
+        var first = lines.Take(splitIndex).ToList();
+        var second = lines.Skip(splitIndex + 1).ToList();
+
+        return (first, second);
+    }
 }

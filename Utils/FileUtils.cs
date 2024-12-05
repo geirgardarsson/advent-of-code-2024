@@ -2,7 +2,7 @@ namespace AdventOfCode2024.Utils;
 
 public static class FileUtils
 {
-    public static string[] ReadInput(string[] args)
+    public static List<string> ReadInput(string[] args)
     {
         var (day, _) = args.ParseInputs();
 
@@ -16,7 +16,7 @@ public static class FileUtils
 
         var path = $"{folder}/{filename}";
 
-        return File.ReadAllLines(path);
+        return [.. File.ReadAllLines(path)];
     }
 
     public static void WriteOutput(string[] args, object data)

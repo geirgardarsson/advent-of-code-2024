@@ -67,4 +67,7 @@ public static class ListExtensions
 
         return output;
     }
+
+    public static T Middle<T>(this List<T> list) =>
+        list[list.Count / 2];
 }
