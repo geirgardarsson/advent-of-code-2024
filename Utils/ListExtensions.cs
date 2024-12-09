@@ -6,6 +6,8 @@ public static class ListExtensions
         this IEnumerable<T> list,
         params T[] arguments) => arguments.Any(a => list.Contains(a));
 
+    public static bool IsAny<T>(this T item, params T[] list) => list.Contains(item);
+
     public static IEnumerable<int> ExceptAtIndex(
         this IEnumerable<int> list,
         int index) => list.Where((_, i) => i != index);

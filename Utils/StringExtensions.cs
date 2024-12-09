@@ -25,4 +25,7 @@ public static class StringExtensions
 
     public static bool IsAny(this string str, params string[] strings) =>
         strings.Contains(str);
+
+    public static bool HasWriteDebugDataFlag(this string[] args) =>
+        args.Contains("--write-debug");
 }
