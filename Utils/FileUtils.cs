@@ -33,4 +33,21 @@ public static class FileUtils
 
         File.WriteAllText(path, data.ToString());
     }
+
+    public static void WriteMatrix(string[] args, char[][] data, string postfix)
+    {
+        var (day, part) = args.ParseInputs();
+
+        var folder = $"Day{day}";
+
+        var filename = args.HasTestFlag()
+            ? $"part{part}-test-{postfix}.txt"
+            : $"part{part}-{postfix}.txt";
+
+        var path = $"{folder}/{filename}";
+
+        var lines = data.Select(d => new string(d));
+
+        File.WriteAllLines(path, lines);
+    }
 }

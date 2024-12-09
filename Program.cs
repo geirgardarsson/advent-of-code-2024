@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics;
-using AdventOfCode2024;
-using AdventOfCode2024.Days;
 
 var sw = Stopwatch.StartNew();
 
@@ -18,6 +16,7 @@ object output = (day, part) switch
     (4, 2) => Day4.Part2(args),
     (5, 1) => Day5.Part1(args),
     (5, 2) => Day5.Part2(args),
+    (6, 1) => Day6.Part1(args),
     _ => throw new ArgumentOutOfRangeException()
 };
 
