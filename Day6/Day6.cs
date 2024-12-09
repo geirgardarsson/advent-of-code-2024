@@ -9,8 +9,6 @@ public static class Day6
     {
         var map = InputUtils.ParseCharMatrix(args);
 
-        var visited = new HashSet<(int, int)>();
-
         map = RunMapRoute(args, map);
 
         var output = FindCoordinates(map, '^', '-', '|', '+');
@@ -36,7 +34,10 @@ public static class Day6
 
             map[y][x] = 'O';
 
-            FileUtils.WriteMatrix(args, map, "state");
+            if (args.HasWriteDebugDataFlag())
+            {
+                FileUtils.WriteMatrix(args, map, "state");
+            }
 
             try
             {
@@ -45,14 +46,13 @@ public static class Day6
             catch (LoopException)
             {
                 loops++;
-                Console.WriteLine("Loops detected: {0}", loops);
             }
         }
 
         return loops;
     }
 
-    private static List<(int, int)> RotationHistory = [];
+    private static List<(int, int, Direction)> MoveHistory = [];
 
     private static char GetMapMarker(
         char[][] map,
@@ -76,7 +76,7 @@ public static class Day6
         var (y, x) = FindCoordinates(map, '^').Single();
         var dir = Direction.Up;
 
-        RotationHistory = [];
+        MoveHistory = [];
 
         try
         {
@@ -105,14 +105,14 @@ public static class Day6
         int x,
         Direction direction)
     {
-        var nextY = FindNextY(y, direction);
-        var nextX = FindNextX(x, direction);
+        var nextY = direction.FindNextY(y);
+        var nextX = direction.FindNextX(x);
 
         if (map[nextY][nextX].IsAny('#', 'O'))
         {
-            direction = Rotate(direction);
+            direction = direction.RotateClockwise();
 
-            CheckForALoop(y, x);
+            CheckForALoop(y, x, direction);
 
             return (y, x, direction);
         }
@@ -120,49 +120,15 @@ public static class Day6
         return (nextY, nextX, direction);
     }
 
-    private static void CheckForALoop(int y, int x)
+    private static void CheckForALoop(int y, int x, Direction direction)
     {
-        var historyLength = 64;
-
-        RotationHistory.Add((y, x));
-
-        if (RotationHistory.Count <= historyLength)
-        {
-            return;
-        }
-
-        RotationHistory = [.. RotationHistory.Skip(1)];
-
-        var isLoop = RotationHistory
-            .Take(historyLength / 2)
-            .SequenceEqual(RotationHistory
-                .Skip(historyLength / 2)
-                .Take(historyLength / 2));
-
-        if (isLoop)
+        if (MoveHistory.Contains((y, x, direction)))
         {
             throw new LoopException();
         }
+
+        MoveHistory.Add((y, x, direction));
     }
-
-    private static int FindNextX(int x, Direction direction) => direction switch
-    {
-        Direction.Up or Direction.Down => x,
-        Direction.Right => x + 1,
-        Direction.Left => x - 1,
-        _ => throw new NotImplementedException(),
-    };
-
-    private static int FindNextY(int y, Direction direction) => direction switch
-    {
-        Direction.Left or Direction.Right => y,
-        Direction.Up => y - 1,
-        Direction.Down => y + 1,
-        _ => throw new NotImplementedException()
-    };
-
-    private static Direction Rotate(Direction direction)
-        => (Direction)((int)(direction + 1) % 4);
 
     private static IEnumerable<(int, int)> FindCoordinates(
         char[][] map,

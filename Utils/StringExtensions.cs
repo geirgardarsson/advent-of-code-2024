@@ -27,5 +27,5 @@ public static class StringExtensions
         strings.Contains(str);
 
     public static bool HasWriteDebugDataFlag(this string[] args) =>
-        args.Contains("--write-debug");
+        args.Contains("--write-debug-data");
 }
