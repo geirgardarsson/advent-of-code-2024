@@ -31,6 +31,23 @@ public static class InputUtils
         return numbers;
     }
 
+    public static Dictionary<TKey, List<TValue>> ParseListDict<TKey, TValue>(
+        string[] args) where TKey : notnull
+    {
+        var lines = FileUtils.ReadInput(args);
+
+        return lines
+            .Select(l => l.Split(":"))
+            .ToDictionary(
+                s => (TKey)Convert.ChangeType(s.First(), typeof(TKey)),
+                s => s
+                    .Last()
+                    .Trim()
+                    .Split(" ")
+                    .Select(n => (TValue)Convert.ChangeType(n, typeof(TValue)))
+                    .ToList());
+    }
+
     public static string ParseString(string[] args) =>
         FileUtils.ReadInput(args).First();
 

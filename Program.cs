@@ -18,6 +18,8 @@ object output = (day, part) switch
     (5, 2) => Day5.Part2(args),
     (6, 1) => Day6.Part1(args),
     (6, 2) => Day6.Part2(args),
+    (7, 1) => Day7.Part1(args),
+    (7, 2) => Day7.Part2(args),
     _ => throw new ArgumentOutOfRangeException()
 };
 
