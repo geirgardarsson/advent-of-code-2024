@@ -28,7 +28,9 @@ public static class Day7
     {
         var permutations = GetOperationPermutations(numbers.Count, useConcatination);
 
-        return permutations.Any(o => CalculateSequence(numbers, o) == key);
+        var outcomes = permutations.Select(p => CalculateSequence(numbers, p)).ToList();
+
+        return outcomes.Any(o => o == key);
     }
 
     private static long CalculateSequence(List<long> numbers, List<Operations> operations)
@@ -41,7 +43,7 @@ public static class Day7
             {
                 Operations.Add => result + n,
                 Operations.Multiply => result * n,
-                Operations.Concat => int.Parse(result.ToString() + n.ToString()),
+                Operations.Concat => long.Parse($"{result}{n}"),
                 _ => result
             };
         }
@@ -64,18 +66,20 @@ public static class Day7
 
         for (int i = 0; i < operationCombinations; i++)
         {
-            var operationSet = new List<Operations>();
+            var currentOperations = new List<Operations>();
 
-            var binary = Convert
-                .ToString(i, allowedOperations.Count) // todo implement tertiary convertion
-                .PadLeft(operationCount, '0');
+            var n = i;
 
-            foreach (var c in binary)
+            while (n > 0)
             {
-                operationSet.Add((Operations)int.Parse(c.ToString()));
+                var remainder = n % allowedOperations.Count;
+                currentOperations.Add((Operations)remainder);
+                n /= allowedOperations.Count;
             }
 
-            operations.Add(operationSet);
+            currentOperations.PadRight(operationCount, Operations.Add);
+
+            operations.Add(currentOperations);
         }
 
         return operations;

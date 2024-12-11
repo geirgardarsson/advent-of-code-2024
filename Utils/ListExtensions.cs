@@ -72,4 +72,26 @@ public static class ListExtensions
 
     public static T Middle<T>(this List<T> list) =>
         list[list.Count / 2];
+
+    public static List<T> PadLeft<T>(this List<T> list, int totalLength, T paddingValue)
+    {
+        List<T> padding = [];
+
+        while (list.Count + padding.Count < totalLength)
+        {
+            padding.Add(paddingValue);
+        }
+
+        return [.. padding, .. list];
+    }
+
+    public static List<T> PadRight<T>(this List<T> list, int totalLength, T paddingValue)
+    {
+        while (list.Count < totalLength)
+        {
+            list.Add(paddingValue);
+        }
+
+        return list;
+    }
 }

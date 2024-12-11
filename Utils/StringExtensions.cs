@@ -1,3 +1,5 @@
+using System.Net.Http.Json;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode2024.Utils;
@@ -28,4 +30,6 @@ public static class StringExtensions
 
     public static bool HasWriteDebugDataFlag(this string[] args) =>
         args.Contains("--write-debug-data");
+
+    public static string Serialize(this object obj) => JsonSerializer.Serialize(obj);
 }
