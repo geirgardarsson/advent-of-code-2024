@@ -31,6 +31,21 @@ public static class ListExtensions
         return rotated;
     }
 
+    public static IEnumerable<(int, int)> FindCoordinates(
+        this char[][] map,
+        params char[] matches)
+    {
+        for (int i = 0; i < map.Length; i++)
+        {
+            for (int j = 0; j < map[i].Length; j++)
+            {
+                if (matches.Contains(map[i][j]))
+                {
+                    yield return (i, j);
+                }
+            }
+        }
+    }
 
     public static List<string> RotateMatrix45DegreesLeft(this char[][] matrix)
     {
@@ -70,6 +85,9 @@ public static class ListExtensions
         return output;
     }
 
+    public static List<char> GetDistinctValues(this char[][] map) =>
+        [.. map.SelectMany(c => c).Except(['.']).Distinct()];
+
     public static T Middle<T>(this List<T> list) =>
         list[list.Count / 2];
 
@@ -94,4 +112,28 @@ public static class ListExtensions
 
         return list;
     }
+
+    public static List<(T, T)> GetAllCombinations<T>(this List<T> list)
+        where T : notnull
+    {
+        var result = new List<(T, T)>();
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            for (int j = i + 1; j < list.Count; j++)
+            {
+                result.Add((list[i], list[j]));
+            }
+        }
+
+        return result;
+    }
+
+    public static bool IsOutOfBounds<T>(
+        this T[][] matrix,
+        (int, int) coordinates) =>
+            coordinates.Item1 < 0 ||
+            coordinates.Item2 < 0 ||
+            coordinates.Item1 >= matrix.Length ||
+            coordinates.Item2 >= matrix[coordinates.Item1].Length;
 }

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using AdventOfCode2024.Exceptions;
 
 namespace AdventOfCode2024.Days;
@@ -11,7 +10,7 @@ public static class Day6
 
         map = RunMapRoute(args, map);
 
-        var output = FindCoordinates(map, '^', '-', '|', '+');
+        var output = map.FindCoordinates('^', '-', '|', '+');
 
         FileUtils.WriteMatrix(args, map, "state");
 
@@ -26,7 +25,7 @@ public static class Day6
 
         map = RunMapRoute(args, map);
 
-        var pathCoords = FindCoordinates(map, '-', '|', '+').ToList();
+        var pathCoords = map.FindCoordinates('-', '|', '+').ToList();
 
         foreach (var (y, x) in pathCoords)
         {
@@ -73,7 +72,7 @@ public static class Day6
 
     private static char[][] RunMapRoute(string[] args, char[][] map)
     {
-        var (y, x) = FindCoordinates(map, '^').Single();
+        var (y, x) = map.FindCoordinates('^').Single();
         var dir = Direction.Up;
 
         MoveHistory = [];
@@ -128,22 +127,6 @@ public static class Day6
         }
 
         MoveHistory.Add((y, x, direction));
-    }
-
-    private static IEnumerable<(int, int)> FindCoordinates(
-        char[][] map,
-        params char[] matches)
-    {
-        for (int i = 0; i < map.Length; i++)
-        {
-            for (int j = 0; j < map[i].Length; j++)
-            {
-                if (matches.Contains(map[i][j]))
-                {
-                    yield return (i, j);
-                }
-            }
-        }
     }
 
     private static void ResetMap(char[][] map)
