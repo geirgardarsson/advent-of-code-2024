@@ -12,7 +12,7 @@ public static class Day6
 
         var output = map.FindCoordinates('^', '-', '|', '+');
 
-        FileUtils.WriteMatrix(args, map, "state");
+        FileUtils.WriteDebug(args, map, "state");
 
         return output.Count();
     }
@@ -29,13 +29,13 @@ public static class Day6
 
         foreach (var (y, x) in pathCoords)
         {
-            ResetMap(map);
+            map.ReplaceMap('.', '-', '|', '+', 'O');
 
             map[y][x] = 'O';
 
             if (args.HasWriteDebugDataFlag())
             {
-                FileUtils.WriteMatrix(args, map, "state");
+                FileUtils.WriteDebug(args, map, "state");
             }
 
             try
@@ -87,7 +87,7 @@ public static class Day6
 
                 if (args.HasWriteDebugDataFlag())
                 {
-                    FileUtils.WriteMatrix(args, map, "state");
+                    FileUtils.WriteDebug(args, map, "state");
                 }
             }
         }
@@ -127,19 +127,5 @@ public static class Day6
         }
 
         MoveHistory.Add((y, x, direction));
-    }
-
-    private static void ResetMap(char[][] map)
-    {
-        for (int i = 0; i < map.Length; i++)
-        {
-            for (int j = 0; j < map[i].Length; j++)
-            {
-                if (map[i][j].IsAny('-', '|', '+', 'O'))
-                {
-                    map[i][j] = '.';
-                }
-            }
-        }
     }
 }

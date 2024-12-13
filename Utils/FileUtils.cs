@@ -34,11 +34,11 @@ public static class FileUtils
         File.WriteAllText(path, data.ToString());
     }
 
-    public static void WriteMatrix(string[] args, char[][] data, string postfix)
+    public static void WriteDebug(string[] args, char[][] data, string postfix)
     {
         var (day, part) = args.ParseInputs();
 
-        var folder = $"Day{day}";
+        var folder = $"Day{day}/debug";
 
         var filename = args.HasTestFlag()
             ? $"part{part}-test-{postfix}.txt"

@@ -18,6 +18,8 @@ touch "$FOLDER_NAME/test-input.txt"
 touch "$FOLDER_NAME/input.txt"
 touch "$FOLDER_NAME/instructions.txt"
 
+mkdir "$FOLDER_NAME/debug"
+
 # Create the Day{X}.cs file and add the specified code
 CS_FILE="$FOLDER_NAME/Day${DAY_NUMBER}.cs"
 cat > "$CS_FILE" <<EOL

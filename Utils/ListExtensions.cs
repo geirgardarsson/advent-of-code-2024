@@ -136,4 +136,49 @@ public static class ListExtensions
             coordinates.Item2 < 0 ||
             coordinates.Item1 >= matrix.Length ||
             coordinates.Item2 >= matrix[coordinates.Item1].Length;
+
+    public static void ReplaceMap(
+        this char[][] map,
+        char original,
+        params char[] toReplace)
+    {
+        for (int i = 0; i < map.Length; i++)
+        {
+            for (int j = 0; j < map[i].Length; j++)
+            {
+                if (toReplace.Contains(map[i][j]))
+                {
+                    map[i][j] = original;
+                }
+            }
+        }
+    }
+
+    public static void MarkMap(
+        this char[][] map,
+        char marker,
+        List<(int, int)> coordinates)
+    {
+        foreach (var (y, x) in coordinates)
+        {
+            map[y][x] = marker;
+        }
+    }
+
+    public static T[][] CopyMap<T>(this T[][] map)
+    {
+        var copy = new T[map.Length][];
+
+        // Copy each row
+        for (int i = 0; i < map.Length; i++)
+        {
+            if (map[i] != null)
+            {
+                copy[i] = new T[map[i].Length];
+                Array.Copy(map[i], copy[i], map[i].Length);
+            }
+        }
+
+        return copy;
+    }
 }
