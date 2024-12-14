@@ -6,7 +6,7 @@ public static class FileUtils
     {
         var (day, _) = args.ParseInputs();
 
-        var folder = $"Day{day}";
+        var folder = $"Days/Day{day}";
         var filename = "input.txt";
 
         if (args.HasTestFlag())
@@ -23,7 +23,7 @@ public static class FileUtils
     {
         var (day, part) = args.ParseInputs();
 
-        var folder = $"Day{day}";
+        var folder = $"Days/Day{day}";
 
         var filename = args.HasTestFlag()
             ? $"part{part}-test-output.txt"
@@ -38,7 +38,7 @@ public static class FileUtils
     {
         var (day, part) = args.ParseInputs();
 
-        var folder = $"Day{day}/debug";
+        var folder = $"Days/Day{day}/debug";
 
         var filename = args.HasTestFlag()
             ? $"part{part}-test-{postfix}.txt"

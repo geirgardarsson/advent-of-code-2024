@@ -1,6 +1,11 @@
 ﻿using System.Diagnostics;
 using AdventOfCode2024;
 
+if (args.Length == 0)
+{
+
+}
+
 var sw = Stopwatch.StartNew();
 
 var (day, part) = args.ParseInputs();
