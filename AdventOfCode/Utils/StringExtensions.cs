@@ -31,5 +31,8 @@ public static class StringExtensions
     public static bool HasWriteDebugDataFlag(this string[] args) =>
         args.Contains("--write-debug-data");
 
+    public static bool HasInternalTestFlag(this string[] args) =>
+        args.Contains("--internal-test");
+
     public static string Serialize(this object obj) => JsonSerializer.Serialize(obj);
 }

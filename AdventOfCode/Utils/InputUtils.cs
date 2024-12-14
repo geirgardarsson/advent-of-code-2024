@@ -1,5 +1,3 @@
-
-
 namespace AdventOfCode2024.Utils;
 
 public static class InputUtils

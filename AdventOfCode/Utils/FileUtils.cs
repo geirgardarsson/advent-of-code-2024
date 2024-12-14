@@ -21,6 +21,11 @@ public static class FileUtils
 
     public static void WriteOutput(string[] args, object data)
     {
+        if (args.HasInternalTestFlag())
+        {
+            return;
+        }
+
         var (day, part) = args.ParseInputs();
 
         var folder = $"Days/Day{day}";
@@ -36,6 +41,11 @@ public static class FileUtils
 
     public static void WriteDebug(string[] args, char[][] data, string postfix)
     {
+        if (args.HasInternalTestFlag())
+        {
+            return;
+        }
+
         var (day, part) = args.ParseInputs();
 
         var folder = $"Days/Day{day}/debug";
