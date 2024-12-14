@@ -1,5 +1,3 @@
-
-
 namespace AdventOfCode2024;
 
 public static class Day8
@@ -55,71 +53,52 @@ public static class Day8
 
     private static List<(int, int)> GetAntiNodes(
         ((int, int), (int, int)) combination,
-        bool checkrecursiveNodes,
+        bool findNodeChain,
         char[][] map)
     {
         var (first, second) = combination;
-        var (y1, x1) = first;
-        var (y2, x2) = second;
 
-        var diffy = Math.Abs(y1 - y2);
-        var dy1 = y1 < y2 ? y1 - diffy : y1 + diffy;
-        var dy2 = y2 < y1 ? y2 - diffy : y2 + diffy;
-
-        var diffx = Math.Abs(x1 - x2);
-        var dx1 = x1 < x2 ? x1 - diffx : x1 + diffx;
-        var dx2 = x2 < x1 ? x2 - diffx : x2 + diffx;
-
-        var n1 = (dy1, dx1);
-        var n2 = (dy2, dx2);
-
-        List<(int, int)> result = [n1, n2];
-
-        if (checkrecursiveNodes && !map.IsOutOfBounds(n1) && !map.IsOutOfBounds(n2))
+        if (!findNodeChain)
         {
-            result.AddRange(GetAntiNodes((first, n1), true, map));
-            result.AddRange(GetAntiNodes((second, n2), true, map));
+            var n1 = FindNextAntinode(first, second);
+            var n2 = FindNextAntinode(second, first);
 
-            // result.AddRange(FindRecursiveAntinodes(first, n1, map));
-            // result.AddRange(FindRecursiveAntinodes(second, n2, map));
+            return [n1, n2];
         }
 
-        return result;
+        return [
+            first,
+            second,
+            .. FindAntinodeChain(first, second, map),
+            .. FindAntinodeChain(second, first, map)];
     }
 
-    private static List<(int, int)> FindRecursiveAntinodes(
-        (int, int) antenna,
-        (int dy1, int dx1) antinode,
+    private static List<(int, int)> FindAntinodeChain(
+        (int, int) first,
+        (int, int) second,
         char[][] map)
     {
-        List<(int, int)> extraNodes = [];
-
-        var firstNode = antenna;
-        var currentNode = antinode;
+        List<(int, int)> results = [];
 
         while (true)
         {
-            var (nextNode1, nextNode2) = FindNextNodes(firstNode, currentNode);
+            var nextnode = FindNextAntinode(first, second);
 
-            var nextNode = nextNode1.Equals(firstNode)
-                || nextNode1.Equals(currentNode)
-                    ? nextNode2 : nextNode1;
-
-            if (map.IsOutOfBounds(nextNode))
+            if (map.IsOutOfBounds(nextnode))
             {
                 break;
             }
 
-            extraNodes.Add(nextNode);
+            results.Add(nextnode);
 
-            firstNode = currentNode;
-            currentNode = nextNode;
+            first = second;
+            second = nextnode;
         }
 
-        return extraNodes;
+        return results;
     }
 
-    private static ((int, int), (int, int)) FindNextNodes(
+    private static (int, int) FindNextAntinode(
         (int, int) first,
         (int, int) second)
     {
@@ -127,17 +106,12 @@ public static class Day8
         var (y2, x2) = second;
 
         var diffy = Math.Abs(y1 - y2);
-        var dy1 = y1 < y2 ? y1 - diffy : y1 + diffy;
-        var dy2 = y2 < y1 ? y2 - diffy : y2 + diffy;
-
         var diffx = Math.Abs(x1 - x2);
-        var dx1 = x1 < x2 ? x1 - diffx : x1 + diffx;
-        var dx2 = x2 < x1 ? x2 - diffx : x2 + diffx;
 
-        var n1 = (dy1, dx1);
-        var n2 = (dy2, dx2);
+        var dy1 = y1 < y2 ? y2 + diffy : y2 - diffy;
+        var dx1 = x1 < x2 ? x2 + diffx : x2 - diffx;
 
-        return (n1, n2);
+        return (dy1, dx1);
     }
 
     private static void WriteDebugState(
@@ -155,5 +129,12 @@ public static class Day8
 
             FileUtils.WriteDebug(args, copy, key.ToString());
         }
+
+        var tcopy = map.CopyMap();
+
+        tcopy.MarkMap('#', [.. antinodes.Values.SelectMany(n => n)]);
+
+        FileUtils.WriteDebug(args, tcopy, "all");
+
     }
 }
