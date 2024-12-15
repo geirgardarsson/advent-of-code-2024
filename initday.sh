@@ -8,7 +8,7 @@ fi
 
 # Extract the day number from the arguments
 DAY_NUMBER=$1
-FOLDER_NAME="Day${DAY_NUMBER}"
+FOLDER_NAME="AdventOfCode/Days/Day${DAY_NUMBER}"
 
 # Create the folder
 mkdir -p "$FOLDER_NAME"
@@ -29,9 +29,30 @@ public static class Day${DAY_NUMBER}
 {
     public static int Part1(string[] args)
     {
+        throw new NotImplementedException();
+    }
 
+    public static int Part2(string[] args)
+    {
+        throw new NotImplementedException();
     }
 }
 EOL
+
+DAY_UTILS_PATH="AdventOfCode/Utils/DayUtils.cs"
+
+# Check if DayUtils.cs exists and modify it
+if [ -f "$DAY_UTILS_PATH" ]; then
+    # Prepare the lines to add
+    NEW_LINES="        (${DAY_NUMBER}, 1) => Day${DAY_NUMBER}.Part1(args),
+        (${DAY_NUMBER}, 2) => Day${DAY_NUMBER}.Part2(args),"
+    
+    # Insert the new lines above the exception line
+    sed -i "/_ => throw new ArgumentOutOfRangeException()/i\\$NEW_LINES" "$DAY_UTILS_PATH"
+
+    echo "Updated DayUtils.cs with Day${DAY_NUMBER} entries."
+else
+    echo "Error: Could not find $DAY_UTILS_PATH. Skipping DayUtils.cs update."
+fi
 
 echo "Initialization complete: Folder and files for Day${DAY_NUMBER} created."

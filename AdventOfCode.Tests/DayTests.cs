@@ -21,6 +21,7 @@ public class DayTests
     [InlineData(7, 2, 162987117690649)]
     [InlineData(8, 1, 273)]
     [InlineData(8, 2, 1017)]
+    [InlineData(9, 1, 1928)]
     public void TestDays(int day, int part, long expected)
     {
         string[] args = [

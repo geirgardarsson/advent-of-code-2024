@@ -8,3 +8,9 @@ dotnet_diagnostic.IDE0130.severity = none
 
 # CA1806: Do not ignore method results
 dotnet_diagnostic.CA1806.severity = none
+
+# IDE0059: Unnecessary assignment of a value
+dotnet_diagnostic.IDE0059.severity = warning
+
+# IDE0060: Remove unused parameter
+dotnet_diagnostic.IDE0060.severity = warning

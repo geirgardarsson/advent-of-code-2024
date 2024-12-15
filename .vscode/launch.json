@@ -7,9 +7,9 @@
       "request": "launch",
       "preLaunchTask": "build",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/bin/Debug/net8.0/AdventOfCode2024.dll",
-      "args": ["8", "2", "-t", "--write-debug-data"],
-      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/AdventOfCode/bin/Debug/net8.0/AdventOfCode2024.dll",
+      "args": ["9", "1", "-t", "--write-debug-data"],
+      "cwd": "${workspaceFolder}/AdventOfCode/",
       "console": "integratedTerminal",
       "stopAtEntry": false
     },
